@@ -23,12 +23,12 @@ public:
     // Calculate the Euclidean norm of the vector and return the value
 
     // We need to overload the [] operator
-    
+
 private:
     // Number of dimensions of the vector
     size_t N;
     // Magnitude of vector
-    T magnitude;
+    unsigned double magnitude;
     
 
 };
