@@ -1,0 +1,11 @@
+So the first and most basic object is a particle
+
+Particle will consist of:
+1. Mass
+2. Position - let's do 2D first
+3. Velocity - 2D again
+4. Acceleration
+
+
+So we can develop a templated vector class
+that has all of the niceties like calcing magnitude etc.
