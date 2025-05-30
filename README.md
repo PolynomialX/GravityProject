@@ -4,10 +4,6 @@ Initial Scope:
 1. Simulate the dynamics of two particles, influenced only by gravity.
 2. First milestone will be output of the two positions in vector format on the terminal
 
-
-
-
-
 Possible Extensions:
 1. Simulate N-body interactions - let the user decide positions and initial conditions.
 2. Output their positions via a GUI - allow for user's to grab onto particles etc.
@@ -16,4 +12,7 @@ Possible Extensions:
 Initial Ideas for exploring themes:
 1. Optimisation - we could trial some SIMD operations
 2. Using threads to look after particles or groups of particles
-3. 
+3. Exploring collisions - elastic and inelastic
+4. For Part II - 3D graphics
+5. For Part III - Relativistic equations
+6. Many thoughts on user interface - these details will be trialled on separate branches
