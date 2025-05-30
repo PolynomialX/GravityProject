@@ -1,6 +1,9 @@
-#include "MathVec.h"
+#include "Vector.h"
+
+namespace mathematics
+{
 template<typename T>
-MathVec<T>::MathVec()
+Vector<T>::Vector()
 {
     // Init to an empty vector
     std::clog << "Instance of MathVec constructed with default constructor" << std::endl;
@@ -8,7 +11,7 @@ MathVec<T>::MathVec()
     n = 0;
 }
 template<typename T>
-MathVec<T>::MathVec(size_t N_) :
+Vector<T>::Vector(size_t N_) :
      n(N_)
 {
     // Want to check that dynamic alloc has successfully occured...
@@ -24,7 +27,7 @@ MathVec<T>::MathVec(size_t N_) :
 }
 
 template<typename T>
-MathVec<T>::MathVec(const MathVec<T>& mathVec)
+Vector<T>::Vector(const MathVec<T>& mathVec)
 {
     // Construction so we just need to alloc + copy
     // And set attributes
@@ -45,10 +48,12 @@ MathVec<T>::MathVec(const MathVec<T>& mathVec)
 
 
 template<typename T>
-MathVec<T>::~MathVec()
+Vector<T>::~Vector()
 {
     // Clean up...
     std::clog << "Destructor for an instance of MathVec caled." << std::endl;
     // Deallocate dynamically allocated memory
     delete[] elements;
 }
+
+} // namespace mathematics

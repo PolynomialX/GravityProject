@@ -1,5 +1,5 @@
-#ifndef MATHVEC_H
-#define MATHVEC_H
+#ifndef VECTOR_H
+#define VECTOR_H
 #include <memory>
 #include <iostream>
 #include <stdlib.h>
@@ -11,20 +11,21 @@
 // to swap out different floating point 
 // types to compare performance or
 // precision...
-
+namespace mathematics
+{
 template <typename T>
-class MathVec
+class Vector
 {
 public:
     // Default c'tor
-    MathVec();
+    Vector();
     // Construct a N_ by 1 zero vector
-    MathVec(size_t N_);
+    Vector(size_t N_);
     // Copy constructor
-    MathVec(const MathVec<T>& mathVec);
+    Vector(const MathVec<T>& mathVec);
     // Currently torn between this being a base class
     // and just having instances of MathVec for all quantities
-    ~MathVec();
+    ~Vector();
 
     // Calculate the Euclidean norm of the vector and return the value
 
@@ -50,4 +51,5 @@ private:
 
 };
 
+} // namespace mathematics 
 #endif // MATHVEC_H
