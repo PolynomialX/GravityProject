@@ -1,0 +1,1 @@
+add_library(Mathematics Vector.cpp)
