@@ -10,5 +10,7 @@ int main()
 {
     std::cout << "Launching NBodyDynamics Version " << NBodyDynamics_VERSION_MAJOR << "."
                                                     << NBodyDynamics_VERSION_MINOR << "\n";
+
+    mathematics::Vector<double> testVector(10);
     return 0;
 }

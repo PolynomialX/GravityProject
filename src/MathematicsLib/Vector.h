@@ -35,8 +35,8 @@ public:
 
 
     // Getters & setters
-    const T& getN();
-    const T * const getElements();
+    size_t getN() const;
+    const T * const getElements() const;
 
 private:
     // Number of dimensions of the vector
@@ -49,7 +49,15 @@ private:
     // or try our hand at vectorising code...
     T * elements;
 
+
 };
+
+// Explicit instantiations - need to research why this is needed - lists allowed types
+extern template class Vector<float>;
+extern template class Vector<double>;
+extern template class Vector<long double>;
+// Just an idea to pursue - stroboscopic evolution of particles?
+extern template class Vector<int>;
 
 } // namespace mathematics 
 #endif // MATHVEC_H
