@@ -69,6 +69,23 @@ const T * const Vector<T>::getElements() const
     return elements;
 }
 
+template<typename T>
+Vector<T> Vector<T>::operator+(const Vector& rhs)
+{
+    // First need to check dimensions match, if not throw an error?
+    if(this->n != rhs.n)
+    {
+        throw std::length_error("Vector sizes must match for addition.");
+    }
+    // Else continue with calculation
+    Vector<T> result(n);
+    for(size_t i = 0; i < n; i++)
+    {
+        result.elements[i] = this->getElements()[i] + rhs.getElements()[i];
+    }
+    return result;
+}
+
 // Explicit instantiations - need to research why this is needed - lists allowed types
 template class Vector<float>;
 template class Vector<double>;

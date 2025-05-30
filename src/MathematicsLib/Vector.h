@@ -31,7 +31,7 @@ public:
 
     // Operators to overload: =,+,+=,-,[],/,* - this can rep
     // both elt-wise mult. and dot prod??
-
+    Vector operator+(const Vector& rhs);
 
 
     // Getters & setters

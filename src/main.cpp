@@ -12,5 +12,18 @@ int main()
                                                     << NBodyDynamics_VERSION_MINOR << "\n";
 
     mathematics::Vector<double> testVector(10);
+    mathematics::Vector<double> testVector2(10);
+
+    mathematics::Vector<double> testVector3(2);
+    try
+    {
+        testVector = testVector3 + testVector2;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    
     return 0;
 }
