@@ -1,4 +1,0 @@
-// CMake configured options...
-
-#define NBodyDynamics_VERSION_MAJOR @NBodyDynamics_VERSION_MAJOR@
-#define NBodyDynamics_VERSION_MINOR @NBodyDynamics_VERSION_MINOR@

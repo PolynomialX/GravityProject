@@ -22,7 +22,7 @@ public:
     // Construct a N_ by 1 zero vector
     Vector(size_t N_);
     // Copy constructor
-    Vector(const MathVec<T>& mathVec);
+    Vector(const Vector<T>& vector);
     // Currently torn between this being a base class
     // and just having instances of MathVec for all quantities
     ~Vector();
@@ -42,7 +42,7 @@ private:
     // Number of dimensions of the vector
     size_t n;
     // Magnitude of vector
-    unsigned double magnitude;
+    double magnitude;
     // Raw pointer to elements
     // Not using a smart pointer here as we 
     // may want to employ IPP routines

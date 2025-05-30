@@ -3,7 +3,7 @@
 
 // Custom includes
 // CMake config include
-#include "NBodyConfig.h"
+#include "NBodyDynamicsConfig.h"
 #include "Vector.h"
 
 int main()

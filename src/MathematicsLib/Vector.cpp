@@ -27,11 +27,11 @@ Vector<T>::Vector(size_t N_) :
 }
 
 template<typename T>
-Vector<T>::Vector(const MathVec<T>& mathVec)
+Vector<T>::Vector(const Vector<T>& vector)
 {
     // Construction so we just need to alloc + copy
     // And set attributes
-    n = mathVec.n;
+    n = vector.n;
     try
     {
         elements = new T[n];
@@ -42,7 +42,7 @@ Vector<T>::Vector(const MathVec<T>& mathVec)
     }
     // Copy contents via memcpy
     // This is ok for built in-types
-    std::memcpy(elements, mathVec.elements, n * sizeof(T));
+    std::memcpy(elements, vector.elements, n * sizeof(T));
     
 }
 
