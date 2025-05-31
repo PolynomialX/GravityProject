@@ -5,14 +5,14 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
-// We anticipate that this class will be
-// a base class
+
 
 // Custom mathematical vector library
 // Let's template it - we may want
 // to swap out different floating point 
 // types to compare performance or
 // precision...
+// Aware of the existence of std::vector this is more of a starting exercise
 namespace mathematics
 {
 template <typename T>
@@ -35,9 +35,8 @@ public:
     // both elt-wise mult. and dot prod??
     Vector<T> operator+(const Vector<T>& rhs);
     Vector<T> operator+(const T rhs);
-    
-
-
+    // Returns the dot product
+    T operator*(const Vector<T>& rhs);
 
     // Getters & setters
     size_t getN() const;
@@ -55,8 +54,6 @@ private:
     // may want to employ IPP routines
     // or try our hand at vectorising code...
     T * elements;
-
-
 };
 
 // Output operator overload

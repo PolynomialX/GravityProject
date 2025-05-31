@@ -79,7 +79,7 @@ T * const Vector<T>::getElements()
 }
 
 template<typename T>
-Vector<T> Vector<T>::operator+(const Vector& rhs)
+Vector<T> Vector<T>::operator+(const Vector<T>& rhs)
 {
     // First need to check dimensions match, if not throw an error?
     if(this->n != rhs.n)
@@ -106,19 +106,39 @@ Vector<T> Vector<T>::operator+(const T rhs)
     }
     return result;
 }
+template<typename T>
+T Vector<T>::operator*(const Vector<T>& rhs)
+{
+    // First need to check dimensions match, if not throw an error?
+    if(this->n != rhs.n)
+    {
+        throw std::length_error("Vector sizes must match for addition.");
+    }
+    // Else continue and calc dot product
+    T dotProduct = 0;
+    for(size_t i = 0; i < n; i++)
+    {
+        dotProduct += this->elements[i] * rhs.getElements()[i];
+    }
+    return dotProduct;
+    
+}
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Vector<T>& rhs)
 {
     os << "[";
-    for(size_t i = 0; i < rhs.getN(); i++)
+    for(size_t i = 0; i < rhs.getN() - 1; i++)
     {
         os << std::to_string(rhs.getElements()[i]);
         os << ", ";
     }
+    os << std::to_string(rhs.getElements()[rhs.getN() - 1]);
     os << "]";
     return os;
 }
+
+
 
 // Explicit instantiations - need to research why this is needed - lists allowed types
 template class Vector<float>;
@@ -126,7 +146,6 @@ template class Vector<double>;
 template class Vector<long double>;
 // Just an idea to pursue - stroboscopic evolution of particles?
 template class Vector<int>;
-
 
 // Non-member function instantiations
 template std::ostream& operator<< <float>(std::ostream& os, const Vector<float>& rhs);
