@@ -24,6 +24,11 @@ int main()
         std::cerr << e.what() << '\n';
     }
     
+
+    testVector.getElements()[0] = 1.0;
+    testVector.getElements()[1] = 2.0;
+
+    std::cout << "testVector: " << testVector << "\n";
     
     return 0;
 }

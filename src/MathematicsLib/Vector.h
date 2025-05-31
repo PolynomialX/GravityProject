@@ -3,6 +3,8 @@
 #include <memory>
 #include <iostream>
 #include <stdlib.h>
+#include <string>
+#include <iostream>
 // We anticipate that this class will be
 // a base class
 
@@ -20,7 +22,7 @@ public:
     // Default c'tor
     Vector();
     // Construct a N_ by 1 zero vector
-    Vector(size_t N_);
+    Vector(size_t n_);
     // Copy constructor
     Vector(const Vector<T>& vector);
     // Currently torn between this being a base class
@@ -31,12 +33,17 @@ public:
 
     // Operators to overload: =,+,+=,-,[],/,* - this can rep
     // both elt-wise mult. and dot prod??
-    Vector operator+(const Vector& rhs);
+    Vector<T> operator+(const Vector<T>& rhs);
+    Vector<T> operator+(const T rhs);
+    
+
 
 
     // Getters & setters
     size_t getN() const;
     const T * const getElements() const;
+    // Non-const version
+    T * const getElements();
 
 private:
     // Number of dimensions of the vector
@@ -51,6 +58,10 @@ private:
 
 
 };
+
+// Output operator overload
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& rhs);
 
 // Explicit instantiations - need to research why this is needed - lists allowed types
 extern template class Vector<float>;

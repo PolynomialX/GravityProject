@@ -11,8 +11,8 @@ Vector<T>::Vector()
     n = 0;
 }
 template<typename T>
-Vector<T>::Vector(size_t N_) :
-     n(N_)
+Vector<T>::Vector(size_t n_) :
+     n(n_)
 {
     std::clog << "Instance of Vector constructed, using parameterised constructor (size)" << std::endl;
     // Want to check that dynamic alloc has successfully occured...
@@ -20,6 +20,8 @@ Vector<T>::Vector(size_t N_) :
     {
         // Dynamically allocate an array on heap
         elements = new T[n];
+        // Set to zero
+        std::memset(elements, 0, n * sizeof(T));
     }
     catch(const std::exception& e)
     {
@@ -70,6 +72,13 @@ const T * const Vector<T>::getElements() const
 }
 
 template<typename T>
+T * const Vector<T>::getElements()
+{
+    // no point in employing Effective C++ Item 3 as trivial
+    return elements;
+}
+
+template<typename T>
 Vector<T> Vector<T>::operator+(const Vector& rhs)
 {
     // First need to check dimensions match, if not throw an error?
@@ -86,11 +95,43 @@ Vector<T> Vector<T>::operator+(const Vector& rhs)
     return result;
 }
 
+template<typename T>
+Vector<T> Vector<T>::operator+(const T rhs)
+{
+    // elt. wise addition of scalar of type T - shifts all elts by rhs
+    Vector<T> result(n);
+    for(size_t i = 0; i < n; i++)
+    {
+        result.elements[i] = this->getElements()[i] + rhs;
+    }
+    return result;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& rhs)
+{
+    os << "[";
+    for(size_t i = 0; i < rhs.getN(); i++)
+    {
+        os << std::to_string(rhs.getElements()[i]);
+        os << ", ";
+    }
+    os << "]";
+    return os;
+}
+
 // Explicit instantiations - need to research why this is needed - lists allowed types
 template class Vector<float>;
 template class Vector<double>;
 template class Vector<long double>;
 // Just an idea to pursue - stroboscopic evolution of particles?
 template class Vector<int>;
+
+
+// Non-member function instantiations
+template std::ostream& operator<< <float>(std::ostream& os, const Vector<float>& rhs);
+template std::ostream& operator<< <double>(std::ostream& os, const Vector<double>& rhs);
+template std::ostream& operator<< <long double>(std::ostream& os, const Vector<long double>& rhs);
+template std::ostream& operator<< <int>(std::ostream& os, const Vector<int>& rhs);
 
 } // namespace mathematics
