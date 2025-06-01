@@ -9,7 +9,9 @@ Vector<T>::Vector()
     std::clog << "Instance of Vector constructed with default constructor" << std::endl;
     elements = nullptr;
     n = 0;
+    magnitude = 0.0;
 }
+
 template<typename T>
 Vector<T>::Vector(size_t n_) :
      n(n_)
@@ -27,6 +29,8 @@ Vector<T>::Vector(size_t n_) :
     {
         std::cerr << e.what() << '\n';
     }
+
+    magnitude = 0.0;
 }
 
 template<typename T>
@@ -46,7 +50,7 @@ Vector<T>::Vector(const Vector<T>& vector)
     // Copy contents via memcpy
     // This is ok for built in-types
     std::memcpy(elements, vector.elements, n * sizeof(T));
-    
+    magnitude = vector.magnitude;
 }
 
 
@@ -56,7 +60,11 @@ Vector<T>::~Vector()
     // Clean up...
     std::clog << "Destructor for an instance of MathVec caled." << std::endl;
     // Deallocate dynamically allocated memory
-    delete[] elements;
+    if(elements != nullptr)
+    {
+        delete[] elements;
+    }
+        
 }
 
 template<typename T>
@@ -72,10 +80,12 @@ const T * const Vector<T>::getElements() const
 }
 
 template<typename T>
-T * const Vector<T>::getElements()
+void Vector<T>::setElement(size_t idx, T val)
 {
-    // no point in employing Effective C++ Item 3 as trivial
-    return elements;
+    elements[idx] = val;
+    // Now need to update magnitude
+    // could go about this in a clever way by storing the squared magnitude??
+    magnitude = calculateMagnitude();
 }
 
 template<typename T>
@@ -86,12 +96,14 @@ Vector<T> Vector<T>::operator+(const Vector<T>& rhs)
     {
         throw std::length_error("Vector sizes must match for addition.");
     }
+
     // Else continue with calculation
     Vector<T> result(n);
     for(size_t i = 0; i < n; i++)
     {
         result.elements[i] = this->getElements()[i] + rhs.getElements()[i];
     }
+    result.magnitude = calculateMagnitude(result);
     return result;
 }
 
@@ -104,6 +116,36 @@ Vector<T> Vector<T>::operator+(const T rhs)
     {
         result.elements[i] = this->getElements()[i] + rhs;
     }
+    result.magnitude = calculateMagnitude(result);
+    return result;
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator-(const Vector<T> &rhs)
+{
+    if(n != rhs.n)
+    {
+        throw std::length_error("Vector sizes must match for vector subtraction.");
+    }
+    // Else continue on and execute element-wise subtraction
+    Vector<T> result(n);
+    for(int i = 0; i < n; i++)
+    {
+        result.elements[i] = elements[i] - rhs.elements[i];
+    }
+    result.magnitude = calculateMagnitude(result);
+    return result;
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator-(const T rhs)
+{
+    Vector result(n);
+    for(int i = 0; i < n; i++)
+    {
+        result.elements[i] = elements[i] - rhs;
+    }
+    result.magnitude = calculateMagnitude(result);
     return result;
 }
 template<typename T>
@@ -121,7 +163,6 @@ T Vector<T>::operator*(const Vector<T>& rhs)
         dotProduct += this->elements[i] * rhs.getElements()[i];
     }
     return dotProduct;
-    
 }
 
 template<typename T>
@@ -138,8 +179,54 @@ std::ostream& operator<<(std::ostream& os, const Vector<T>& rhs)
     return os;
 }
 
+template<typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& rhs)
+{
+    if(this->elements != nullptr)
+    {
+        delete[] elements;
+    }
+    this->n = rhs.n;
+    elements = new T[n];
+    for(size_t i = 0; i < n; i++)
+    {
+        this->elements[i] = rhs.elements[i];
+    }
+    this->magnitude = rhs.magnitude;
+    return *this;
+}
 
+template<typename T>
+double Vector<T>::calculateMagnitude() const
+{
+    double magnitude = 0.0;
+    // Euclidean norm is the sqrt of the sum of the squares
+    for(size_t i = 0; i < n; i++)
+    {
+        magnitude += elements[i] * elements[i];
+    }
+    magnitude = std::sqrt(magnitude);
+    return magnitude;
+}
 
+template<typename T>
+double calculateMagnitude(const Vector<T>& vector)
+{
+    double magnitude = 0.0;
+    // Euclidean norm is the sqrt of the sum of the squares
+    for(size_t i = 0; i < vector.getN(); i++)
+    {
+        magnitude += vector.elements[i] * vector.elements[i];
+    }
+    magnitude = std::sqrt(magnitude);
+    return magnitude;
+}
+
+template<typename T>
+double Vector<T>::getMagnitude() const
+{
+    return magnitude;
+}
 // Explicit instantiations - need to research why this is needed - lists allowed types
 template class Vector<float>;
 template class Vector<double>;

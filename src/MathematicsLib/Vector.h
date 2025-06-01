@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <math.h>
 
 
 // Custom mathematical vector library
@@ -35,20 +36,28 @@ public:
     // both elt-wise mult. and dot prod??
     Vector<T> operator+(const Vector<T>& rhs);
     Vector<T> operator+(const T rhs);
+    Vector<T> operator-(const Vector<T> &rhs);
+    Vector<T> operator-(const T rhs);
+    Vector<T>& operator=(const Vector<T>& rhs);
     // Returns the dot product
     T operator*(const Vector<T>& rhs);
 
     // Getters & setters
     size_t getN() const;
     const T * const getElements() const;
-    // Non-const version
-    T * const getElements();
+    void setElement(size_t idx, T val);
+    double getMagnitude() const;
+
+
 
 private:
+    // Calcs the Euclidean norm of the vector
+    double calculateMagnitude() const;
     // Number of dimensions of the vector
     size_t n;
-    // Magnitude of vector
-    double magnitude;
+    // Magnitude of vector - make this mutable as calculating this does not fundamentally change
+    // the vector itself and allows for const calcMag function.
+    mutable double magnitude;
     // Raw pointer to elements
     // Not using a smart pointer here as we 
     // may want to employ IPP routines
@@ -67,5 +76,7 @@ extern template class Vector<long double>;
 // Just an idea to pursue - stroboscopic evolution of particles?
 extern template class Vector<int>;
 
+template<typename T>
+static double calculateMagnitude(const Vector<T>& vector);
 } // namespace mathematics 
 #endif // MATHVEC_H
